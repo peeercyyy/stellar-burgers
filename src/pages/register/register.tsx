@@ -1,8 +1,7 @@
 import { RegisterUI } from '@ui-pages';
 import { FC, SyntheticEvent, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { registerUser, selectIsAuthorized } from '../../services/slices/auth';
-import { useDispatch, useSelector } from '../../services/store';
+import { registerUser } from '../../services/slices/auth';
+import { useDispatch } from '../../services/store';
 
 export const Register: FC = () => {
   const [userName, setUserName] = useState('');
@@ -11,8 +10,6 @@ export const Register: FC = () => {
 
   const dispatch = useDispatch();
 
-  const isAuthorized = useSelector(selectIsAuthorized);
-
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -20,10 +17,6 @@ export const Register: FC = () => {
 
     dispatch(registerUser({ email, password, name: userName }));
   };
-
-  if (isAuthorized) {
-    return <Navigate to='/' />;
-  }
 
   return (
     <RegisterUI
