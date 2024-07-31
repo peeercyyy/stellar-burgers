@@ -33,8 +33,11 @@ export const BurgerConstructor: FC = () => {
 
     const data: string[] = [];
 
-    if (constructorItems.bun) data.push(constructorItems.bun._id);
     constructorItems.ingredients.forEach((i) => data.push(i._id));
+    if (constructorItems.bun) {
+      data.unshift(constructorItems.bun._id);
+      data.push(constructorItems.bun._id);
+    }
 
     dispatch(orderBurger(data));
     dispatch(resetConstructor());

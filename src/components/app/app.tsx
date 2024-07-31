@@ -16,6 +16,7 @@ import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { checkUser, selectUserIsLoading } from '../../services/slices/auth';
+import { getIngredients } from '../../services/slices/ingredients';
 import { useDispatch, useSelector } from '../../services/store';
 import { ProtectedRoute } from '../protected-route';
 import { Preloader } from '../ui/preloader';
@@ -28,6 +29,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(checkUser());
+    dispatch(getIngredients());
   }, []);
 
   const handleModalClose = () => {
@@ -43,29 +45,28 @@ const App = () => {
       <AppHeader />
       <Routes>
         <Route path='/' element={<ConstructorPage />} />
-        <Route path='/login' element={<ProtectedRoute authRoute />}>
+        <Route path='/login' element={<ProtectedRoute onlyUnAuth />}>
           <Route path='/login' element={<Login />} />
         </Route>
-        <Route path='/register' element={<ProtectedRoute authRoute />}>
+        <Route path='/register' element={<ProtectedRoute onlyUnAuth />}>
           <Route path='/register' element={<Register />} />
         </Route>
-        <Route path='/forgot-password' element={<ProtectedRoute authRoute />}>
+        <Route path='/forgot-password' element={<ProtectedRoute onlyUnAuth />}>
           <Route path='/forgot-password' element={<ForgotPassword />} />
         </Route>
-        <Route path='/reset-password' element={<ProtectedRoute authRoute />}>
+        <Route path='/reset-password' element={<ProtectedRoute onlyUnAuth />}>
           <Route path='/reset-password' element={<ResetPassword />} />
         </Route>
-        <Route path='/feed' element={<ProtectedRoute />}>
-          <Route path='/feed' element={<Feed />} />
-          <Route
-            path='/feed/:number'
-            element={
-              <Modal title='' onClose={handleModalClose}>
-                <OrderInfo />
-              </Modal>
-            }
-          />
-        </Route>
+
+        <Route path='/feed' element={<Feed />} />
+        <Route
+          path='/feed/:number'
+          element={
+            <Modal title='' onClose={handleModalClose}>
+              <OrderInfo />
+            </Modal>
+          }
+        />
 
         <Route path='/profile' element={<ProtectedRoute />}>
           <Route path='/profile' element={<Profile />} />

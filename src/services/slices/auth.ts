@@ -31,7 +31,8 @@ export const authSlice = createSlice({
     selectUser: (state: TAuthStore) => state.user,
     selectIsAuthorized: (state: TAuthStore) => !!state.user,
     selectUserIsLoading: (state: TAuthStore) => state.isLoading,
-    selectUserError: (state: TAuthStore) => state.loginError
+    selectUserError: (state: TAuthStore) => state.loginError,
+    selectIsAuthChecked: (state: TAuthStore) => state.isAuthChecked
   },
   reducers: {
     setAuthChecked: (state, action: PayloadAction<boolean>) => {
@@ -154,6 +155,10 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-export const { selectUser, selectIsAuthorized, selectUserIsLoading } =
-  authSlice.selectors;
+export const {
+  selectUser,
+  selectIsAuthorized,
+  selectUserIsLoading,
+  selectIsAuthChecked
+} = authSlice.selectors;
 export default authSlice.reducer;
